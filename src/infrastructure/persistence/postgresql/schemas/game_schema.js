@@ -21,11 +21,6 @@ export const ItemSchema = new EntitySchema({
         }
     },
     relations: {
-        facturas: {
-            target: 'facturas',
-            type: 'many-to-many',
-            inverseSide: 'games'
-        },
         detalle_facturas: {
             target: "detalle_facturas",
             type: "one-to-many",

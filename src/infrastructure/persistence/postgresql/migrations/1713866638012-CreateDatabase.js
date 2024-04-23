@@ -1,7 +1,7 @@
 
 
-export class CreateDatabase1713821467685 {
-    name = 'CreateDatabase1713821467685'
+export class CreateDatabase1713866638012 {
+    name = 'CreateDatabase1713866638012'
 
     async up(queryRunner) {
         await queryRunner.query(`CREATE TABLE "users" ("id" character varying NOT NULL, "username" character varying NOT NULL, "password" character varying NOT NULL, "nombre" character varying NOT NULL, "apellidos" character varying NOT NULL, "email" character varying NOT NULL, "telefono" integer NOT NULL, CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`);
