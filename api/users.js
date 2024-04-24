@@ -7,7 +7,6 @@ import { v4 as uuidv4 } from 'uuid';
 const saltRounds = 5;
 const router = express.Router();
 
-
 async function registerUser(req, res) {
   const { username, password, nombre, apellidos, email, telefono } = req.body;
   try {
@@ -42,16 +41,12 @@ async function registerUser(req, res) {
 async function loginUser(req, res) {
   const { username, password } = req.body;
   try {
-    const userRepository = dataSource.getRepository('User');
+    const userRepository = dataSource.getRepository('users');
     const user = await userRepository.findOneBy({ username });
-    if (!user) {
-      return res.status(404).json({ message: 'Usuario no encontrado.' });
-    }
-
     // Comparar la contraseña hasheada
     const match = await bcrypt.compare(password, user.password);
     if (match) {
-      res.json({ message: 'Login exitoso!' });
+      res.json({ message: 'Login exitoso!', user: user.username});
     } else {
       res.status(401).json({ message: 'Contraseña incorrecta.' });
     }
