@@ -16,6 +16,12 @@ export const ItemSchema = new EntitySchema({
         precio: {
             type: Number
         },
+        trailer: {
+            type: String
+        },
+        imagen: {
+            type: String
+        },
         stock: {
             type: Boolean
         }

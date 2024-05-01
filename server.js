@@ -1,24 +1,27 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import userRoutes from './api/users.js';
+import { authenticateToken,corsMiddleware } from './api/middleware.js';
 import {dataSource} from "./src/infrastructure/persistence/postgresql/data-source.js";
-
+import cookieParser from "cookie-parser";
 
 // App es una instancia de express
 const app = express()
+// Usar cookie-parser
+app.use(cookieParser())
+app.use(bodyParser.json())
+
 // Definimos el puerto
 const port = 4000
-// Middleware CORS
-app.use((request, response, next) => {
-  response.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-  response.header('Access-Control-Allow-Headers', 'content-type');
-  response.header('Access-Control-Allow-Methods', 'POST, PUT, GET');
-  next();
-});
+// Middleware
+app.use(corsMiddleware)
+app.use(authenticateToken)
+
+// Rutas privadas
 
 
-app.use(bodyParser.json());
-app.use('/api/users', userRoutes);
+// Rutas publicas
+app.use('/api/public', userRoutes)
 
 async function main() {
   try {
@@ -31,6 +34,5 @@ async function main() {
     console.error('Error al iniciar la aplicación:', error);
   }
 }
-
 main();
 
