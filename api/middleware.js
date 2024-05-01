@@ -8,6 +8,7 @@ async function authenticateToken(req, res, next) {
     // Verificar si el token existe
     if (!token) {
         console.log('No hay token')
+        next()
         return res.status(401);
     }
     // Verificar y decodificar el token

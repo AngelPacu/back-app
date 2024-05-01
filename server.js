@@ -19,7 +19,6 @@ app.use(authenticateToken)
 
 // Rutas privadas
 
-
 // Rutas publicas
 app.use('/api/public', userRoutes)
 
