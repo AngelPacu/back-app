@@ -49,7 +49,7 @@ async function loginUser(req, res) {
     const match = await bcrypt.compare(password, user.password);
     if (match) {
       // Crear el token FALTA Cambiar la clavesecreta por una de entorno.
-      const token = jwt.sign({ sub: user.id }, 'veryVerySecretKey', { expiresIn: '1h' });
+      const token = jwt.sign({ sub: user.username }, 'veryVerySecretKey', { expiresIn: '1h' });
       // Enviar el token en una cookie
       res.cookie('auth', token, {httpOnly: true});
       res.status(200).json({ user: user.username, token });

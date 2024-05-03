@@ -17,10 +17,17 @@ const port = 4000
 app.use(corsMiddleware)
 app.use(authenticateToken)
 
-// Rutas privadas
-
 // Rutas publicas
 app.use('/api/public', userRoutes)
+// Ruta de verificación de autenticación
+app.get('/api/verify', authenticateToken, (req, res) => {
+  if (req.user) {
+    res.status(200).json({ username: req.user.sub });
+  } else {
+    res.status(401).send('No autenticado');
+  }
+});
+
 
 async function main() {
   try {
