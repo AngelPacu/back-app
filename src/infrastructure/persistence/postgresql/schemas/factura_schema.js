@@ -11,7 +11,7 @@ export const FacturaSchema = new EntitySchema({
             type: Date
         },
         tarjeta: {
-            type: Number
+            type: String
         },
         total: {
             type: Number

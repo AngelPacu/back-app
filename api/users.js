@@ -72,10 +72,28 @@ async function logoutUser(req, res) {
   }
 }
 
+async function getFactura(req, res) {
+  try {
+    const userRepository = dataSource.getRepository('users');
+    const user = await userRepository.findOneBy({ username: req.user.sub });
+    const facturaRepository = dataSource.getRepository('facturas');
+    const facturas = await facturaRepository.find({
+      where: { users: { id: user.id } },
+      relations: ["users"] // Relación con la tabla de usuarios
+  });
+    res.status(200).json(facturas);
+  } catch (error) {
+    console.error('Error al obtener las facturas:', error);
+    res.status(500).json({ error: error.message });
+  }
+
+}
+
 // Rutas
 router.post('/register', registerUser);
 router.post('/login', loginUser);
 router.post('/logout', logoutUser);
+router.post('/facturas', getFactura);
 
 export default router;
 

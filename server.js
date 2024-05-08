@@ -19,6 +19,7 @@ app.use(authenticateToken)
 
 // Rutas publicas
 app.use('/api/public', userRoutes)
+
 // Ruta de verificación de autenticación
 app.get('/api/verify', authenticateToken, (req, res) => {
   if (req.user) {
@@ -27,7 +28,6 @@ app.get('/api/verify', authenticateToken, (req, res) => {
     res.status(401).send('No autenticado');
   }
 });
-
 
 async function main() {
   try {
