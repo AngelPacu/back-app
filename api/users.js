@@ -89,11 +89,99 @@ async function getFactura(req, res) {
 
 }
 
+async function GetOrCreateCarrito(userId) {
+  // carro = factura
+  try {
+
+    const carroRepository = dataSource.getRepository('facturas');
+    // Buscamos el carro del usuario
+    let carro = await carroRepository.findOne({
+      where: { users: {id: userId},
+      estado: 'carrito' } ,
+      relations: ['users'],
+    });
+    // Si no existe el carro, lo creamos
+    if (!carro) {
+      carro = carroRepository.create({ users: {id: userId} ,
+        estado: 'carrito' });
+      await carroRepository.save(carro);
+      console.log('Creado');
+    }
+    return carro;
+  } catch (error) {
+    console.error('Error al obtener el carro:', error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
+
+async function addGametoCarrito (req, res) {
+  try {
+    const userRepository = dataSource.getRepository('users');
+    const detalleRepository = dataSource.getRepository('detalle_facturas');
+    const gameRepository = dataSource.getRepository('games');
+    const user = await userRepository.findOneBy({ username: req.user.sub });
+    const factura = await GetOrCreateCarrito(user.id);
+    const game = await gameRepository.findOneBy({ id: req.body.gameId });
+    if (!game) {
+      return res.status(404).json({ message: 'El juego no existe' });
+    }
+    // Buscar si ya existe el detalle de la factura para este juego
+    let detalle = await detalleRepository.findOne({
+      where: {
+        facturas: { id: factura.id },
+        games: { id: game.id }
+      }
+    });
+    if (detalle) {
+      // Si el detalle ya existe, incrementar la cantidad
+      detalle.cantidad += 1;
+    } else {
+      // Si no existe, crear un nuevo detalle de factura
+      detalle = detalleRepository.create({
+        cantidad: 1,
+        descuento: 0,
+        facturas: factura,
+        games: game
+      });
+    }
+    // Guardar el detalle de la factura
+    await detalleRepository.save(detalle);
+    res.status(200).json({ message: 'Juego añadido al carro' });
+  } catch (error) {
+    console.error('Error al añadir el juego al carro:', error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
+async function GetCarritoDetails (req,res){   
+  try {
+    const userRepository = dataSource.getRepository('users');
+    const detalleRepository = dataSource.getRepository('detalle_facturas');
+    const user = await userRepository.findOneBy({ username: req.user.sub });
+    const factura = await GetOrCreateCarrito(user.id);
+    const detalles = await detalleRepository.find({
+      where: { facturas: {id: factura.id} },
+      relations: ['games']
+    });
+    
+    res.status(200).json(detalles);
+  } catch (error) {
+    console.error('Error al obtener los detalles del carro:', error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
+
 // Rutas
 router.post('/register', registerUser);
 router.post('/login', loginUser);
 router.post('/logout', logoutUser);
 router.post('/facturas', getFactura);
+router.post('/carrito/add', addGametoCarrito);
+router.post('/carrito', GetCarritoDetails);
+
+
 
 export default router;
 

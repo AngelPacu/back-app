@@ -5,7 +5,8 @@ export const FacturaSchema = new EntitySchema({
     columns: {
         id: {
             primary: String,
-            type: Number
+            type: Number,
+            generated: true
         },
         fecha: {
             type: Date

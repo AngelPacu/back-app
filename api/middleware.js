@@ -7,8 +7,8 @@ async function authenticateToken(req, res, next) {
     const token = req.cookies.auth;
     // Verificar si el token existe
     if (!token) {
-        console.log('No hay token')
         next()
+        console.log('No hay token')
         return res.status(401);
     }
     // Verificar y decodificar el token
