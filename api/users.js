@@ -1,8 +1,9 @@
-import express, { response } from 'express';
+import express from 'express';
 import { dataSource } from "../src/infrastructure/persistence/postgresql/data-source.js";
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import jwt from 'jsonwebtoken';
+import stripeLib from 'stripe';
 
 
 const saltRounds = 5;
@@ -49,7 +50,7 @@ async function loginUser(req, res) {
     const match = await bcrypt.compare(password, user.password);
     if (match) {
       // Crear el token FALTA Cambiar la clavesecreta por una de entorno.
-      const token = jwt.sign({ sub: user.username }, 'veryVerySecretKey', { expiresIn: '1h' });
+      const token = jwt.sign({ sub: user.username }, process.env.JWT_SECRET_KEY, { expiresIn: process.env.JWT_EXPIRES_IN });
       // Enviar el token en una cookie
       res.cookie('auth', token, {httpOnly: true});
       res.status(200).json({ user: user.username, token });
@@ -89,7 +90,7 @@ async function getFactura(req, res) {
 
 }
 
-async function GetOrCreateCarrito(userId) {
+async function getOrCreateCarrito(userId) {
   // carro = factura
   try {
 
@@ -105,7 +106,6 @@ async function GetOrCreateCarrito(userId) {
       carro = carroRepository.create({ users: {id: userId} ,
         estado: 'carrito' });
       await carroRepository.save(carro);
-      console.log('Creado');
     }
     return carro;
   } catch (error) {
@@ -121,7 +121,7 @@ async function addGametoCarrito (req, res) {
     const detalleRepository = dataSource.getRepository('detalle_facturas');
     const gameRepository = dataSource.getRepository('games');
     const user = await userRepository.findOneBy({ username: req.user.sub });
-    const factura = await GetOrCreateCarrito(user.id);
+    const factura = await getOrCreateCarrito(user.id);
     const game = await gameRepository.findOneBy({ id: req.body.gameId });
     if (!game) {
       return res.status(404).json({ message: 'El juego no existe' });
@@ -154,12 +154,12 @@ async function addGametoCarrito (req, res) {
   }
 }
 
-async function GetCarritoDetails (req,res){   
+async function getCarritoDetails (req,res){   
   try {
     const userRepository = dataSource.getRepository('users');
     const detalleRepository = dataSource.getRepository('detalle_facturas');
     const user = await userRepository.findOneBy({ username: req.user.sub });
-    const factura = await GetOrCreateCarrito(user.id);
+    const factura = await getOrCreateCarrito(user.id);
     const detalles = await detalleRepository.find({
       where: { facturas: {id: factura.id} },
       relations: ['games']
@@ -172,14 +172,98 @@ async function GetCarritoDetails (req,res){
   }
 }
 
+async function buyCarrito (req,res){
+  //Api Key desde .env
+  const stripe = stripeLib(process.env.STRIPE_SECRET_KEY);
+  try {
+    const userRepository = dataSource.getRepository('users');
+    const detalleRepository = dataSource.getRepository('detalle_facturas');
+    const user = await userRepository.findOneBy({ username: req.user.sub });
+    const factura = await getOrCreateCarrito(user.id);
+    const detalles = await detalleRepository.find({
+      where: { facturas: {id: factura.id} },
+      relations: ['games']
+    });
+
+    // Calcular el total
+    let total = 0
+    detalles.map(detalle => {
+      total += detalle.games.precio * detalle.cantidad;
+    });
+    
+    // Crear los items de la factura
+    const line_items = detalles.map(item => ({
+      price_data: {
+        currency: 'eur',
+        product_data: {
+          name: item.games.nombre,
+          images: [item.games.imagen],
+        },
+        unit_amount: item.games.precio * 100,
+      },
+      quantity: item.cantidad,
+    }));
+
+    const sessionCreateParams = {
+      payment_method_types: ['card'],
+      mode: 'payment',
+      success_url: 'http://localhost:3000/home_user/success',
+      cancel_url: "http://localhost:3000/home_user/cancel",
+      line_items: line_items
+    };
+
+    // Crear la sesión de Stripe
+    const session = await stripe.checkout.sessions.create(sessionCreateParams);
+    // Enviamos la url.
+    res.status(200).json({ url: session.url });
+  } catch (error) {
+    console.error('Error al comprar el carro:', error);
+    res.status(500).json({ error: error.message });
+  }
+
+}
+
+async function modifyCarrito (req,res){
+  try {
+    const userRepository = dataSource.getRepository('users');
+    const detalleRepository = dataSource.getRepository('detalle_facturas');
+    const facturaRepository = dataSource.getRepository('facturas');
+    const user = await userRepository.findOneBy({ username: req.user.sub });
+    const factura = await getOrCreateCarrito(user.id);
+    const detalles = await detalleRepository.find({
+      where: { facturas: {id: factura.id} },
+      relations: ['games']
+    });
+
+    // Calcular el total
+    let total = 0
+    detalles.map(detalle => {
+      total += detalle.games.precio * detalle.cantidad;
+    });
+    
+    // Cambiar el estado de la factura para borrar el carrito)
+    const fecha = new Date().toLocaleString('es-ES', { timeZone: 'Europe/Madrid' }).replace(/\//g, '-').replace(',', '');
+    factura.fecha = fecha;
+    factura.estado = 'Pagado';
+    factura.total = total;
+    await facturaRepository.save(factura);
+
+    res.status(200).json(detalles);
+  } catch (error) {
+    console.error('Error al obtener los detalles del carro:', error);
+    res.status(500).json({ error: error.message });
+  }
+}
 
 // Rutas
 router.post('/register', registerUser);
 router.post('/login', loginUser);
 router.post('/logout', logoutUser);
 router.post('/facturas', getFactura);
+router.post('/carrito', getCarritoDetails);
 router.post('/carrito/add', addGametoCarrito);
-router.post('/carrito', GetCarritoDetails);
+router.post('/carrito/buy', buyCarrito);
+router.post('/carrito/modify', modifyCarrito);
 
 
 

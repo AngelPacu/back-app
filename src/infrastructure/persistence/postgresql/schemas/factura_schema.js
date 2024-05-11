@@ -9,13 +9,12 @@ export const FacturaSchema = new EntitySchema({
             generated: true
         },
         fecha: {
-            type: Date
-        },
-        tarjeta: {
-            type: String
+            type: Date,
+            nullable: true
         },
         total: {
-            type: Number
+            type: Number,
+            nullable: true
         },
         estado: {
             type: String

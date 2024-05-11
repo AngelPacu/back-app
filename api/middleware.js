@@ -12,7 +12,7 @@ async function authenticateToken(req, res, next) {
         return res.status(401);
     }
     // Verificar y decodificar el token
-    jwt.verify(token, 'veryVerySecretKey', (err, user) => {
+    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
     if (err) { return res.status(403);}
     // Almacenar el usuario en el objeto de solicitud para su uso posterior
     req.user = user;

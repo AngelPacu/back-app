@@ -12,7 +12,7 @@ app.use(cookieParser())
 app.use(bodyParser.json())
 
 // Definimos el puerto
-const port = 4000
+const port = process.env.PORT
 // Middleware
 app.use(corsMiddleware)
 app.use(authenticateToken)
