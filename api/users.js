@@ -120,7 +120,8 @@ async function addGametoCarrito (req, res) {
     const userRepository = dataSource.getRepository('users');
     const detalleRepository = dataSource.getRepository('detalle_facturas');
     const gameRepository = dataSource.getRepository('games');
-    const user = await userRepository.findOneBy({ username: req.user });//quitado el sub por falta de TOKEN
+    console.log(req.user.sub)
+    const user = await userRepository.findOneBy({ username: req.user.sub });
     const factura = await getOrCreateCarrito(user.id);
     const game = await gameRepository.findOneBy({ id: req.body.gameId });
     const cantidad = req.body.cantidad;
