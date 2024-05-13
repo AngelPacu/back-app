@@ -82,7 +82,8 @@ async function getFactura(req, res) {
       where: { users: { id: user.id } },
       relations: ["users"] // Relación con la tabla de usuarios
   });
-    res.status(200).json(facturas);
+    const filteredData = facturas.filter(item => item.estado !== 'carrito');
+    res.status(200).json(filteredData);
   } catch (error) {
     console.error('Error al obtener las facturas:', error);
     res.status(500).json({ error: error.message });
@@ -120,7 +121,6 @@ async function addGametoCarrito (req, res) {
     const userRepository = dataSource.getRepository('users');
     const detalleRepository = dataSource.getRepository('detalle_facturas');
     const gameRepository = dataSource.getRepository('games');
-    console.log(req.user.sub)
     const user = await userRepository.findOneBy({ username: req.user.sub });
     const factura = await getOrCreateCarrito(user.id);
     const game = await gameRepository.findOneBy({ id: req.body.gameId });
