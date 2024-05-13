@@ -120,9 +120,11 @@ async function addGametoCarrito (req, res) {
     const userRepository = dataSource.getRepository('users');
     const detalleRepository = dataSource.getRepository('detalle_facturas');
     const gameRepository = dataSource.getRepository('games');
-    const user = await userRepository.findOneBy({ username: req.user.sub });
+    const user = await userRepository.findOneBy({ username: req.user });//quitado el sub por falta de TOKEN
     const factura = await getOrCreateCarrito(user.id);
     const game = await gameRepository.findOneBy({ id: req.body.gameId });
+    const cantidad = req.body.cantidad;
+
     if (!game) {
       return res.status(404).json({ message: 'El juego no existe' });
     }
@@ -133,13 +135,18 @@ async function addGametoCarrito (req, res) {
         games: { id: game.id }
       }
     });
+    
+    if (cantidad <= 0) {
+      return res.status(400).json({ message: 'La cantidad debe ser mayor que cero' });
+    }
+
     if (detalle) {
       // Si el detalle ya existe, incrementar la cantidad
-      detalle.cantidad += 1;
+      detalle.cantidad += cantidad;
     } else {
       // Si no existe, crear un nuevo detalle de factura
       detalle = detalleRepository.create({
-        cantidad: 1,
+        cantidad: cantidad,
         descuento: 0,
         facturas: factura,
         games: game

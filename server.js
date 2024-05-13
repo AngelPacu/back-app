@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import userRoutes from './api/users.js';
+import prodRoutes from './api/products.js'
 import { authenticateToken,corsMiddleware } from './api/middleware.js';
 import {dataSource} from "./src/infrastructure/persistence/postgresql/data-source.js";
 import cookieParser from "cookie-parser";
@@ -19,6 +20,7 @@ app.use(authenticateToken)
 
 // Rutas publicas
 app.use('/api/public', userRoutes)
+app.use('/api/public', prodRoutes)
 
 // Ruta de verificación de autenticación
 app.get('/api/verify', authenticateToken, (req, res) => {

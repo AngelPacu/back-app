@@ -1,0 +1,175 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "nombre": "The Legend of Zelda: Breath of the Wild",
+      "descripcion": "Embárcate en una aventura épica en el vasto reino de Hyrule, explorando tierras salvajes y mazmorras llenas de peligros. Con una jugabilidad innovadora y un mundo expansivo, Breath of the Wild redefine la franquicia de Zelda.",
+      "precio": 59,
+      "descuentoPrecio": 49.99,
+      "rating": 9.5,
+      "stock": 100,
+      "plataforma": "Nintendo Switch",
+      "categoria": "Aventura",
+      "thumbnail": "https://steamrip.com/wp-content/uploads/2021/05/The-Legend-of-Zelda-Breath-of-the-Wild-Free-Download-Pre-Installed-Steamrip.jpg",
+      "imagen": [
+        "https://assets.vg247.com/current/2016/06/the_legend_of_zelda_breath_of_the_wild_e3_2016_new-18.jpg",
+        "https://nintendoeverything.com/wp-content/uploads/zelda-1.jpg",
+        "https://www.perfectly-nintendo.com/wp-content/gallery/zelda-breath-of-the-wild-blog-16-06-2017/3.jpg"
+      ],
+      "trailer": "https://www.youtube.com/watch?v=ofH5ptn5w-A"
+    },
+    {
+      "id": 2,
+      "nombre": "The Witcher 3: Wild Hunt",
+      "descripcion": "Sumérgete en un mundo de fantasía oscuro y lleno de intriga, siguiendo la historia del cazador de monstruos Geralt de Rivia. Con misiones épicas, decisiones morales impactantes y un vasto mundo por explorar, The Witcher 3 es una experiencia inolvidable.",
+      "precio": 50,
+      "descuentoPrecio": 40,
+      "rating": 9.8,
+      "stock": 150,
+      "plataforma": "PlayStation 4",
+      "categoria": "RPG",
+      "thumbnail": "https://get.wallhere.com/photo/snow-winter-The-Witcher-The-Witcher-3-Wild-Hunt-season-screenshot-computer-wallpaper-111404.jpg",
+      "imagen": [
+        "http://www.heypoorplayer.com/wp-content/uploads/2015/06/wildhunt.jpg",
+        "https://news-cdn.softpedia.com/images/news2/The-Witcher-3-Wild-Hunt-Gets-Some-Stunning-4K-Resolution-Screenshots-478336-4.jpg"
+      ],
+      "trailer": "https://www.youtube.com/watch?v=1-l29HlKkXU"
+    },
+    {
+      "id": 3,
+      "nombre": "Red Dead Redemption 2",
+      "descripcion": "Vive la época del salvaje oeste como nunca antes, en esta obra maestra de Rockstar Games. Con una historia profunda, personajes memorables y un mundo detallado, Red Dead Redemption 2 te lleva en un viaje a través de la frontera americana.",
+      "precio":50,
+      "descuentoPrecio": 45,
+      "rating": 9.7,
+      "stock": 200,
+      "plataforma": "PlayStation 4",
+      "categoria": "Aventura",
+      "thumbnail": "url_del_thumbnail",
+      "imagen": [
+        "https://images.wallpapersden.com/image/download/2018-game-red-dead-redemption-2-poster_a2dobm2UmZqaraWkpJRobWllrWdma2U.jpg",
+        "https://cdn.wccftech.com/wp-content/uploads/2018/10/RDR2_Review_20.jpg"
+      ],
+      "trailer": "url_del_trailer"
+    },
+    {
+      "id": 4,
+      "nombre": "Super Mario Odyssey",
+      "descripcion": "Acompaña a Mario en una aventura por diversos reinos en su intento de rescatar a la princesa Peach de las garras de Bowser. Con mecánicas de juego innovadoras y niveles creativos, Super Mario Odyssey es un clásico instantáneo.",
+      "precio": 50,
+      "descuentoPrecio": 43,
+      "rating": 9.6,
+      "stock": 120,
+      "plataforma": "Nintendo Switch",
+      "categoria": "Aventura",
+      "thumbnail": "https://cdn02.nintendo-europe.com/media/images/11_square_images/games_18/nintendo_switch_5/SQ_NSwitch_SuperMarioOdyssey.jpg",
+      "imagen": [
+        "https://d1fs8ljxwyzba6.cloudfront.net/assets/article/2017/11/07/marioodyssey-big_feature.jpg",
+        "https://i.ytimg.com/vi/2U1npAdGTUY/maxresdefault.jpg"
+      ],
+      "trailer": "url_del_trailer"
+    },
+    {
+      "id": 5,
+      "nombre": "God of War (2018)",
+      "descripcion": "Únete a Kratos y su hijo Atreus en una emocionante odisea a través de la mitología nórdica. Con combates intensos, una narrativa emocional y gráficos impresionantes, God of War redefine lo que significa ser un héroe.",
+      "precio": 60,
+      "descuentoPrecio": 55.3,
+      "rating": 9.7,
+      "stock": 90,
+      "plataforma": "PlayStation 4",
+      "categoria": "Acción",
+      "thumbnail": "https://image.api.playstation.com/vulcan/img/rnd/202008/2617/gCLof29n2eeFxVRGpo90xW1A.jpg",
+      "imagen": [
+        "https://cdn.vox-cdn.com/thumbor/BqO5jp43d8wZ4m2AxUmjazIujB4=/0x35:1894x1027/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/10633613/My_Great_Capture_Screenshot_2018_04_02_13_17_17.png",
+        "https://i.ytimg.com/vi/3SAuuHCOkyI/maxresdefault.jpg"
+      ],
+      "trailer": "url_del_trailer"
+    },
+    {
+      "id": 6,
+      "nombre": "Cyberpunk 2077",
+      "descripcion": "Adéntrate en Night City, una metrópolis obsesionada con el poder, el glamour y las modificaciones corporales. Encarna a V, un mercenario en busca de un implante único que garantiza la inmortalidad, en este RPG de mundo abierto lleno de decisiones morales impactantes y acción trepidante.",
+      "precio": 60,
+      "descuentoPrecio": 40.99,
+      "rating": 7.2,
+      "stock": 80,
+      "plataforma": "PlayStation 4",
+      "categoria": "RPG",
+      "thumbnail": "https://img.uhdpaper.com/image/3/wallpaper.jpg?4K=https://2.bp.blogspot.com/-GKwR7y3V6Ps/XsPmJxOaJXI/AAAAAAAAYps/4ur9OXQktLwbHqWW0oki2ndh4bMQBfHDACLcBGAsYHQ/s320/cyberpunk-2077-v-game-characters-uhdpaper.com-4K-3.1983-wp.thumbnail.jpg",
+      "imagen": [
+        "https://www.yekbot.com/wp-content/uploads/2020/12/Cyberpunk-2077-Jobs.jpg",
+        "https://cdn.wccftech.com/wp-content/uploads/2019/08/Cyberpunk-2077-Hammer-New.jpg"
+      ],
+      "trailer": "url_del_trailer"
+    },
+    {
+      "id": 7,
+      "nombre": "Assassin's Creed Valhalla",
+      "descripcion": "Explora la Edad Oscura de Inglaterra mientras lideras a tu clan vikingo en una búsqueda para conquistar nuevos territorios. Conviértete en un temido guerrero y forja tu propio camino hacia la gloria en este juego de acción y aventuras de mundo abierto de la aclamada serie Assassin's Creed.",
+      "precio": 50,
+      "descuentoPrecio": 46.99,
+      "rating": 8.5,
+      "stock": 100,
+      "plataforma": "PlayStation 5",
+      "categoria": "Acción",
+      "thumbnail": "https://image.api.playstation.com/vulcan/ap/rnd/202008/0723/i2ICFMr0Ius6qtYYD9GNrY68.jpg",
+      "imagen": [
+        "https://cdn.mos.cms.futurecdn.net/iNiU9epDmKD5WSerpTpL9h.jpg",
+        "https://p4.wallpaperbetter.com/wallpaper/597/976/965/assassin-s-creed-valhalla-viking-video-games-ubisoft-hd-wallpaper-preview.jpg"
+      ],
+      "trailer": "url_del_trailer"
+    },
+    {
+      "id": 8,
+      "nombre": "Halo Infinite",
+      "descripcion": "Prepárate para un nuevo episodio en la legendaria saga de Halo. Conviértete en el Jefe Maestro y enfrenta a un nuevo enemigo en un vasto anillo Halo. Descubre secretos antiguos y libra batallas épicas en este juego de disparos en primera persona lleno de acción.",
+      "precio": 60,
+      "descuentoPrecio": 50,
+      "rating": 8,
+      "stock": 120,
+      "plataforma": "Xbox Series X",
+      "categoria": "Acción",
+      "thumbnail": "https://assets-prd.ignimgs.com/2020/07/24/halo-infinite-button-2020-1595617876660.jpg",
+      "imagen": [
+        "https://cdn.neowin.com/news/images/uploaded/2022/06/1656616435_coop-0.jpg",
+        "https://twistedvoxel.com/wp-content/uploads/2021/12/halo-infinite-4.jpeg"
+      ],
+      "trailer": "url_del_trailer"
+    },
+    {
+      "id": 9,
+      "nombre": "Spider-Man: Miles Morales",
+      "descripcion": "Embárcate en una nueva aventura como Miles Morales, un joven héroe con increíbles habilidades arácnidas. Descubre la historia de cómo se convierte en Spider-Man mientras defiende a la ciudad de Nueva York de una amenaza inminente.",
+      "precio": 50,
+      "descuentoPrecio": 35.55,
+      "rating": 9,
+      "stock": 80,
+      "plataforma": "PlayStation 5",
+      "categoria": "Acción",
+      "thumbnail": "https://image.api.playstation.com/vulcan/ap/rnd/202008/1020/T45iRN1bhiWcJUzST6UFGBvO.png",
+      "imagen": [
+        "https://images.hdqwalls.com/wallpapers/spiderman-miles-morales-2020-4k-h0.jpg",
+        "https://gamingbolt.com/wp-content/uploads/2020/09/marvels-spider-man-miles-morales-image-1.jpg"
+      ],
+      "trailer": "url_del_trailer"
+    },
+    {
+      "id": 10,
+      "nombre": "Animal Crossing: New Horizons",
+      "descripcion": "Escapa a una isla paradisíaca donde puedes construir tu propio paraíso, decorar tu hogar y socializar con tus vecinos animales. Con una jugabilidad relajante y una comunidad vibrante, Animal Crossing: New Horizons es perfecto para jugadores de todas las edades.",
+      "precio": 50,
+      "descuentoPrecio": 45.99,
+      "rating": 9.3,
+      "stock": 100,
+      "plataforma": "Nintendo Switch",
+      "categoria": "Simulación",
+      "thumbnail": "https://www.ordinaryreviews.com/wp-content/uploads/2020/03/animal-crossing-new-horizons-launches.jpg",
+      "imagen": [
+        "https://static2.srcdn.com/wordpress/wp-content/uploads/2020/02/Animal-Crossing-New-Horizons-1.jpg",
+        "https://media.wired.com/photos/5fa5be20daa25f804cdbd2d9/master/w_2560%2Cc_limit/games_culture_anch-fall.jpg"
+      ],
+      "trailer": "url_del_trailer"
+    }
+  ]
+}

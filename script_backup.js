@@ -52,6 +52,42 @@ app.delete('/users/:userId', async (req,res) => {
 
 })
 
+app.get('/games',async(req, res) => {
+  try{
+  const gamesRepository = dataSource.getRepository(GameSchema);
+  const games = await gamesRepository.find();
+  res.json(games);
+  } catch(error){
+    console.error('error con get juegos',error);
+    res.status(500).json({success: false, message:'Error con get juegos'});
+  }
+})
+app.get('/games/:gameId', async (req,res) => {
+    const {gameId} = req.params
+    const gamesRepository = dataSource.getRepository(GameSchema);
+    const game = await gamesRepository.findOneBy({id: gameId});
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
+    game ? res.json(game) : res.sendStatus(404);
+})
+
+app.post('/games',async (req,res) =>{
+  try {
+    const juegosData = await readFile('products.json','utf-8');
+    const juegosJSON = JSON.parse(juegosData)
+    const juegosRepository = dataSource.getRepository("games");
+    
+    // Guardar cada juego en la base de datos
+    for (const juegoData of juegosJSON.products) {
+        const juego = juegosRepository.create(juegoData);
+        await juegosRepository.save(juego);
+    }
+    res.status(200).json({ success: true, message: 'Datos de juegos cargados correctamente' });
+} catch (error) {
+    console.error('Error al cargar los datos de juegos:', error);
+    res.status(500).json({ success: false, message: 'Error al cargar los datos de juegos' });
+}
+});
+
 // Optimitzar DB connections
 await dataSource.initialize();
 
