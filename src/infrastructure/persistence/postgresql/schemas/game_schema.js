@@ -15,34 +15,29 @@ export const GameSchema = new EntitySchema({
         },
         precio: {
             type: Number
-        }
-        ,descuentoPrecio: {
+        },
+        rating: {
             type: "numeric",
             precision: 5,
             scale: 2
-        }
-        ,rating: {
-            type: "numeric",
-            precision: 5,
-            scale: 2
-        }
-        ,stock: {
+        },
+        stock: {
             type: Number
-        }
-        ,plataforma:{
+        },
+        plataforma:{
             type: String
-        }
-        ,categoria:{
+        },
+        categoria:{
             type: String
-        }
-        ,thumbnail: {
+        },
+        thumbnail: {
             type: String
-        }
-        ,imagen: {
+        },
+        imagen: {
             type: String,
             array:true
-        }
-        ,trailer: {
+        },
+        trailer: {
             type: String
         }
     },

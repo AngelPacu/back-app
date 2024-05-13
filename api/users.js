@@ -171,7 +171,6 @@ async function getCarritoDetails (req,res){
       where: { facturas: {id: factura.id} },
       relations: ['games']
     });
-    
     res.status(200).json(detalles);
   } catch (error) {
     console.error('Error al obtener los detalles del carro:', error);
@@ -204,7 +203,6 @@ async function buyCarrito (req,res){
         currency: 'eur',
         product_data: {
           name: item.games.nombre,
-          images: [item.games.imagen],
         },
         unit_amount: item.games.precio * 100,
       },
@@ -249,7 +247,7 @@ async function modifyCarrito (req,res){
     });
     
     // Cambiar el estado de la factura para borrar el carrito)
-    const fecha = new Date().toLocaleString('es-ES', { timeZone: 'Europe/Madrid' }).replace(/\//g, '-').replace(',', '');
+    const fecha = new Date().toISOString().replace('T', ' ').replace(/\..+/, '');
     factura.fecha = fecha;
     factura.estado = 'Pagado';
     factura.total = total;
@@ -258,6 +256,39 @@ async function modifyCarrito (req,res){
     res.status(200).json(detalles);
   } catch (error) {
     console.error('Error al obtener los detalles del carro:', error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
+
+async function deleteGameCarrito(req,res){
+  try {
+    const userRepository = dataSource.getRepository('users');
+    const detalleRepository = dataSource.getRepository('detalle_facturas');
+    const gameRepository = dataSource.getRepository('games');
+    const user = await userRepository.findOneBy({ username: req.user.sub });
+    const factura = await getOrCreateCarrito(user.id);
+    const game = await gameRepository.findOneBy({ id: req.params.gameId });
+
+    if (!game) {
+      return res.status(404).json({ message: 'El juego no existe' });
+    }
+    // Buscar si ya existe el detalle de la factura para este juego
+    const detalle = await detalleRepository.findOne({
+      where: {
+        facturas: { id: factura.id },
+        games: { id: game.id }
+      }
+    });
+    if (detalle) {
+      // Eliminar el detalle de la factura
+      await detalleRepository.remove(detalle);
+      res.status(200).json({ message: 'Juego eliminado del carrito' });
+    } else {
+      res.status(404).json({ message: 'El juego no se encuentra en el carrito' });
+    }
+  } catch (error) {
+    console.error('Error al eliminar el juego del carrito:', error);
     res.status(500).json({ error: error.message });
   }
 }
@@ -271,7 +302,7 @@ router.post('/carrito', getCarritoDetails);
 router.post('/carrito/add', addGametoCarrito);
 router.post('/carrito/buy', buyCarrito);
 router.post('/carrito/modify', modifyCarrito);
-
+router.delete('/carrito/modify/delete/:gameId', deleteGameCarrito);
 
 
 export default router;

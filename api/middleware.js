@@ -27,7 +27,7 @@ async function corsMiddleware(req, res, next) {
     // Set headers to allow cross-origin requests
     res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.header('Access-Control-Allow-Methods', 'POST, PUT, GET, OPTIONS');
+    res.header('Access-Control-Allow-Methods', 'POST, PUT, GET, OPTIONS, DELETE');
     res.header('Access-Control-Allow-Credentials', true);
     // Continue to the next middleware
     next();
